@@ -6,7 +6,16 @@ let board = new Board(CANVAS,BOARD_SIZE, CELL_EDGE)
 board.printc();
 board.drawBackground()
 board.drawForm()
-board.refresh()
+let t = [
+    [0,0,0],
+    [0,1,0],
+    [1,1,1]
+]
+board.refresh(t)
 board.moveDown()
+board.rotate()
+board.rotate()
+board.rotate()
+board.rotate()
 /* board.moveDown()
 board.moveDown() */
