@@ -1,10 +1,11 @@
-const BOARD_SIZE = 25
-const CELL_EDGE = 40
+const ROWS = 20
+const COLS = 13
+const CELL_EDGE = 30
 const CANVAS = document.getElementById("display")
 
-let board = new Board(CANVAS,BOARD_SIZE, CELL_EDGE)
+let board = new Board(CANVAS,ROWS, COLS, CELL_EDGE)
 //board.printc();
-//board.drawBackground()
+board.drawMatriz()
 //board.drawForm()
 let t = [
     [0,0,0],
@@ -21,6 +22,31 @@ function r(){
     board.rotate()
     //board.drawMatriz()
 }
+function ri(){
+    board.moveRight()
+    //board.drawMatriz()
+}
+function le(){
+    board.moveLeft()
+    //board.drawMatriz()
+}
+document.addEventListener("keydown", e =>{
+
+    switch(e.key){
+        case "ArrowDown":
+            m()
+            break
+        case "ArrowRight":
+            ri()
+            break
+        case "ArrowLeft":
+            le()
+            break
+        case "ArrowUp":
+            r()
+            break
+    }
+})
 /* setInterval(() => {board.moveDown()
 board.drawMatriz()}, 200) */
 //board.rotate()

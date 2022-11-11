@@ -1,12 +1,12 @@
 class Board{
-    constructor(board, size, edge){
+    constructor(board, rsize, csize, edge){
         this.board = board
         this.ctx = board.getContext("2d")
-        this.cellSize = edge / 2
-        this.cols = size
-        this.rows = size
-        this.width = size * this.cellSize
-        this.height = size * this.cellSize
+        this.cellSize = edge
+        this.cols = csize
+        this.rows = rsize
+        this.width = csize * this.cellSize
+        this.height = rsize * this.cellSize
         board.width = this.width
         board.height = this.height
         this.grid = Array.from(Array(this.rows), () => Array(this.cols).fill(0));
@@ -49,12 +49,12 @@ class Board{
             [1,1]
         ]
         this.canMove = true
-        let midX = Math.round(this.rows / 2)
-        let fRow = false
+        let midX = Math.round(this.cols / 2)
+        //let fRow = false
         this.actualF = figure;
             this.actualF.forEach((item, indexM) =>{
                 item.forEach((sItem, index) =>{
-                    let col = (midX + index) - 1
+                    let col = (midX + index) - 2
                     this.grid[indexM][col] = sItem
                     this.positions.unshift([indexM, col])
                 /* if(sItem != 0){
@@ -93,7 +93,6 @@ class Board{
         this.positions.slice().reverse().forEach((item,index) => {
             this.grid[item[0]][item[1]] = this.r[row][c]
             this.positions.slice().reverse()[index] = [item[0] , item[1]]
-            //console.log(item[0] +". " +item[1])
             c++
             if(c >= this.r.length){
                 c = 0
@@ -109,6 +108,19 @@ class Board{
             this.positions[index] = [item[0] , item[1] + 1]
             this.grid[item[0]][item[1]] = 0
         })
+        this.drawMatriz()
+    }
+    moveLeft(){
+        this.positions.forEach((item,index) => {
+            if(this.grid[item[0]][item[1]] == 0){
+                this.positions[index] = [item[0], item[1] - 1]
+            }else{
+                this.grid[item[0]][item[1] - 1] = this.grid[item[0]][item[1]]
+                this.positions[index] = [item[0] , item[1] - 1]
+            }
+        })
+        console.table(this.positions)
+        this.drawMatriz()
     }
     moveDown(){
         for(let [index, item] of this.positions.entries()){
@@ -123,7 +135,6 @@ class Board{
                 }
                 this.drawMatriz()
             }else{
-                this.canMove = false
                 this.positions = []
                 this.actualF = []
                 this.numR = 0;
@@ -133,7 +144,11 @@ class Board{
                     [0,1,1],
                     [1,1,0]
                 ]
-                this.refresh(t)
+                let t2 = [
+                    [2,2],
+                    [2,2]
+                ]
+                this.refresh(t2)
                 this.drawMatriz()
                 break
             }
@@ -180,27 +195,34 @@ class Board{
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         break
+                    case 2:
+                        this.ctx.strokeStyle = "#000000"
+                        this.ctx.fillStyle = "cyan"
+                        this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                        this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                        break
                 }
             })
         })
     }
     collision(nextBlock, i){
         if(this.grid[nextBlock - 1][i] != 0){
-            //console.log(this.grid[nextBlock][i])
-            if(nextBlock > this.grid.length - 1){
+            if(nextBlock > this.grid.length - 1 ){
+                console.log("toco p")
+                this.canMove = false
                 return true
             }else if(nextBlock < this.grid.length - 1){
                 if(this.grid[nextBlock][i] != 0){
-                    console.log("sadasd")
+                    console.log("toco")
+                    this.canMove = false
                     return true
                 }else{
+                    console.log("f")
                     return false
                 }
             }else{
                 return false
             }
-        }else{
-            return false
         }
     }
 
