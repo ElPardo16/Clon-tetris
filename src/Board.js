@@ -374,4 +374,28 @@ class Board{
     printc(){
         console.log(this.rows)
     } */
+
+    deleteFullRows(){
+        let tablero = this.grid;
+        console.log (tablero)
+        for (let row in tablero){
+            console.log("row N° "+ row + " " + tablero[row])
+            let arrayRow = []
+            //console.log("array"+arrayRow)
+            let counter = 0;
+            for (let col in tablero[row]){
+                console.log(tablero[row][col])
+                if(tablero[row][col] == 1){
+                    counter = counter + 1
+                    console.log("cont " + counter)
+                    if(counter == this.cols){
+                        //console.log("Fullrow")
+                        tablero.splice(row, 1)
+                        console.log(tablero)
+                        tablero.unshift(arrayRow(this.cols).fill(0))
+                    }
+                }
+            }
+        }
+    }
 }
