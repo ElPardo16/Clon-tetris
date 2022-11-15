@@ -2,6 +2,9 @@ const ROWS = 20
 const COLS = 13
 const CELL_EDGE = 30
 const CANVAS = document.getElementById("display")
+var lastDelta = 1000
+var deltaTime = 700
+var playing = true
 
 let board = new Board(CANVAS,ROWS, COLS, CELL_EDGE)
 //board.printc();
@@ -31,7 +34,7 @@ function le(){
     //board.drawMatriz()
 }
 document.addEventListener("keydown", e =>{
-
+    //console.log(e.key)
     switch(e.key){
         case "ArrowDown":
             m()
@@ -45,8 +48,31 @@ document.addEventListener("keydown", e =>{
         case "ArrowUp":
             r()
             break
+        case "q":
+            stop()
+            break;
+        case "p":
+            pause()
+            break;
     }
 })
+
+
+    var gameloop = setInterval(() => board.moveDown(),deltaTime)
+
+
+function pause(){
+    playing = !playing
+    if(playing){
+        gameloop = setInterval(() => board.moveDown(),deltaTime)
+        //deltaTime = lastDelta
+    }else{
+        stop()
+    }
+}
+function stop(){
+    clearInterval(gameloop)
+}
 /* setInterval(() => {board.moveDown()
 board.drawMatriz()}, 200) */
 //board.rotate()

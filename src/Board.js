@@ -62,51 +62,12 @@ class Board{
                     this.positions.unshift([indexM, col])
                     
                     this.positions2[indexM].push([indexM, col, sItem])
-                    //console.table(this.positions2)
-                /* if(sItem != 0){
-                    console.log(`${indexM} , ${index}`)
-                    let col = (midX + index) - 1
-                    if(indexM == 0){
-                        fRow = true
-                    }
-                    if(fRow){
-                        this.grid[indexM][col] = sItem
-                        this.positions.unshift([indexM, col])
-                    }else{
-                        this.grid[indexM - 1][col] = sItem
-                        this.positions.unshift([ indexM - 1, col])
-                    }
-                } */
             })
         })
         //console.table(this.positions2)
         this.drawMatriz()
     }
     rotate(){
-        /* if(this.numR == 0){
-            this.r = this.actualF[0].map((val, index) => this.actualF.map(row => row[index]).reverse())
-        }else{
-            this.r = this.r[0].map((val, index) => this.r.map(row => row[index]).reverse())
-        }
-        this.numR++
-        
-        this.positions.forEach((itemM,index) => {
-            if(itemM != 0){
-                this.grid[itemM[0]][itemM[1]] = 0
-            }
-        })
-        let row = 0;
-        let c = 0;
-        this.positions.slice().reverse().forEach((item,index) => {
-            this.grid[item[0]][item[1]] = this.r[row][c]
-            this.positions.slice().reverse()[index] = [item[0] , item[1]]
-            c++
-            if(c >= this.r.length){
-                c = 0
-                row++
-            }
-            
-        }) */
         this.clean()
         if(this.numR == 0){
             this.r = this.actualF[0].map((val, index) => this.actualF.map(row => row[index]).reverse())
@@ -127,25 +88,10 @@ class Board{
                 }
             })
         })
-        console.table(this.positions2)
+        //console.table(this.positions2)
         this.drawMatriz()
     }
     moveRight(){
-        /* this.positions.forEach((item,index) => {
-            this.grid[item[0]][item[1] + 1] = this.grid[item[0]][item[1]]
-            this.positions[index] = [item[0] , item[1] + 1]
-            this.grid[item[0]][item[1]] = 0
-        })
-        this.drawMatriz() */
-        /* this.positions2.forEach((itemM,indexM) =>{
-            itemM.forEach((item, index) => {
-               
-                    this.grid[item[0]][item[1] + 1] = item[2]
-                    this.positions2[indexM][index] = [item[0] , item[1] + 1, item[2]]
-                    this.grid[item[0]][item[1]] = 0
-
-            })
-        }) */
         if(!this.collisionRight()){
             this.clean()
             this.positions2.forEach((itemM,indexM) =>{
@@ -164,15 +110,6 @@ class Board{
         }
     }
     moveLeft(){
-        /* this.positions.forEach((item,index) => {
-            if(this.grid[item[0]][item[1]] == 0){
-                this.positions[index] = [item[0], item[1] - 1]
-            }else{
-                this.grid[item[0]][item[1] - 1] = this.grid[item[0]][item[1]]
-                this.positions[index] = [item[0] , item[1] - 1]
-            }
-        })
-        console.table(this.positions) */
         if(!this.collisionLeft()){
             this.clean()
             this.positions2.forEach((itemM,indexM) =>{
@@ -201,7 +138,6 @@ class Board{
                     }else{
                         this.grid[itemM[i][0] + 1][itemM[i][1]] = itemM[i][2]
                         this.positions2[indexM][i] = [itemM[i][0] + 1, itemM[i][1], itemM[i][2]]
-                        //this.grid[itemM[i][0]][itemM[i][1]] = 2
                     }
                 }
             })
@@ -220,63 +156,10 @@ class Board{
                     [2,2],
                     [2,2]
                 ]
-                this.refresh(t)
-                this.drawMatriz()
-        }
-        /* for(let [index, item] of this.positions.entries()){
-            //console.log(!this.collision(item[0] + 1) +" " +item[0] + 1)
-            if(!this.collision(item[0] + 1,item[1]) && this.canMove){
-                if(this.grid[item[0]][item[1]] == 0){
-                    this.positions[index] = [item[0] + 1 , item[1]]
-                }else{
-                    this.grid[item[0] + 1][item[1]] = this.grid[item[0]][item[1]]
-                    this.positions[index] = [item[0] + 1 , item[1]]
-                    this.grid[item[0]][item[1]] = 0
-                }
-                this.drawMatriz()
-            }else{
-                this.positions = []
-                this.actualF = []
-                this.numR = 0;
-                this.r = 0;
-                let t = [
-                    [0,0,0],
-                    [0,1,1],
-                    [1,1,0]
-                ]
-                let t2 = [
-                    [2,2],
-                    [2,2]
-                ]
                 this.refresh(t2)
                 this.drawMatriz()
-                break
-            }
-        } */
-        //console.table(this.grid)
-        /* this.positions.forEach((item,index) => {
-            if(!this.collision(item[0] + 1) && this.canMove){
-                this.grid[item[0] + 1][item[1]] = this.grid[item[0]][item[1]]
-                this.positions[index] = [item[0] + 1 , item[1]]
-                this.grid[item[0]][item[1]] = 0
-                this.drawMatriz()
-            }else{
-                this.canMove = false
-                this.positions = []
-                this.actualF = []
-                this.numR = 0;
-                this.r = 0;
-                console.log("yuca")
-                let t = [
-                    [0,0,0],
-                    [0,1,1],
-                    [1,1,0]
-                ]
-                this.refresh(t)
-                //console.table(this.grid)
-                this.drawMatriz()
-            }
-        }) */
+        }
+       
     }
     clean(){
         this.positions2.forEach((itemM,indexM) =>{
@@ -323,59 +206,29 @@ class Board{
         let repeat = 0;
         //console.log(this.positions2.length)
         while (collider < this.positions2.length) {
-            /* if(collider > 0 && collider <= this.positions2.length){
-                
-            } */
             if(collider == 2 && aux > this.positions2.length){
                 break
             }
             this.positions2[this.positions2.length - aux].forEach((item, index) => {
                 
                 if (item[item.length - 1] != 0 && collider < this.positions2.length) {
-                    /* if(aux == 1){
-                        this.colls[collider] = [item[0] + 1, item[1]]
-                        cols.push(item[1])
-                        collider++
-                    }else{ */
                         cols.forEach((item2, index2) => {
-                            console.log(item2 +" ." +item[1])
                             if(item2 == item[1]){
                                 repeat++
                             }
                         })
-                        console.log(repeat)
+                        //console.log(repeat)
                         if(repeat == 0){
                             this.colls[collider] = [item[0] + 1, item[1]]
                             cols.push(item[1])
                             collider++
                         }
                         repeat = 0
-                    //}
-                    //console.log(collider)
-                    //console.log(this.colls)
-                    /* if(cols != 0){
-                        cols.forEach((item2, index2) => {
-                            if(item2 != item[1]){
-                                this.colls[collider] = [item[0] + 1, item[1]]
-                                cols.push(item[1])
-                                collider++
-                            }
-                        })
-                    }else{ */
-                        //this.colls[collider] = [item[0] + 1, item[1]]
-                        //cols.push(item[1])
-                        //collider++
-                    //}
-                    //console.log(this.colls.length)
-                    //console.log(colls)
-                    //console.log("chocable")
-                } else {
-                    console.log("nada")
                 }
             })
             aux++
         }
-        console.log(this.colls)
+        //console.log(this.colls)
 
         if (this.grid?.[this.colls[0][0]] === undefined) {
             //console.log("no existe")
@@ -394,15 +247,6 @@ class Board{
             return true
         }
         this.colls = []
-        /* if(this.grid?.[colls[0][0]] == undefined){
-            console.log("no existe")
-            return false
-        } */
-        /* if(colls.length == this.positions2.length){
-            colls.forEach((item,index) => {
-                console.log(this.grid[item[0] + 1][item[1]])
-            })
-        } */
         
     }
     collisionLeft() {
@@ -422,20 +266,16 @@ class Board{
                             repeat++
                         }
                     })
-                    console.log(repeat)
                     if (repeat == 0) {
                         this.colls[collider] = [item[0], item[1] - 1]
                         rows.push(item[0])
                         collider++
                     }
                     repeat = 0
-                } else {
-                    console.log("nada")
                 }
             })
             aux++
         }
-        console.log(this.colls)
 
         if (this.grid?.[this.colls[0][0]] === undefined) {
             this.colls = []
@@ -470,21 +310,17 @@ class Board{
                             repeat++
                         }
                     })
-                    console.log(repeat)
                     if (repeat == 0) {
                         this.colls[collider] = [item[0], item[1] + 1]
                         rows.push(item[0])
                         collider++
                     }
                     repeat = 0
-                } else {
-                    console.log("nada")
                 }
             })
             aux++
         }
-        console.log(this.colls)
-
+   
         if (this.grid?.[this.colls[0][0]] === undefined) {
             this.colls = []
             return true
