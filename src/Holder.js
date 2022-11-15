@@ -10,12 +10,9 @@ let board = new Board(CANVAS,ROWS, COLS, CELL_EDGE)
 //board.printc();
 board.drawMatriz()
 //board.drawForm()
-let t = [
-    [0,0,0],
-    [0,1,0],
-    [1,1,1]
-]
-board.refresh(t)
+let figureM = new Figuras().tetrominoRandom();
+
+board.refresh(figureM)
 //board.moveDown()
 function m(){
     board.moveDown()
@@ -58,13 +55,17 @@ document.addEventListener("keydown", e =>{
 })
 
 
-    var gameloop = setInterval(() => board.moveDown(),deltaTime)
+    var gameloop = setInterval(() => {
+        board.moveDown()
+    },deltaTime)
 
 
 function pause(){
     playing = !playing
     if(playing){
-        gameloop = setInterval(() => board.moveDown(),deltaTime)
+        var gameloop = setInterval(() => {
+            board.moveDown()
+        },deltaTime)
         //deltaTime = lastDelta
     }else{
         stop()

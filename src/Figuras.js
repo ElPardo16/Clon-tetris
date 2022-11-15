@@ -91,5 +91,5 @@ class Figuras {
     }
 }
 
-let tetro = new Figuras().tetrominoRandom();
-console.log(tetro)
+//let tetro = new Figuras().tetrominoRandom();
+//console.log(tetro)

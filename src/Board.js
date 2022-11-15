@@ -143,20 +143,13 @@ class Board{
             })
             this.drawMatriz()
         }else{
+            this.deleteFullRows()
             this.positions2 = []
                 this.actualF = []
                 this.numR = 0;
                 this.r = 0;
-                let t = [
-                    [0,0,0],
-                    [0,1,1],
-                    [1,1,0]
-                ]
-                let t2 = [
-                    [2,2],
-                    [2,2]
-                ]
-                this.refresh(t2)
+                let figure = new Figuras().tetrominoRandom();
+                this.refresh(figure)
                 this.drawMatriz()
         }
        
@@ -206,7 +199,7 @@ class Board{
         let repeat = 0;
         //console.log(this.positions2.length)
         while (collider < this.positions2.length) {
-            if(collider == 2 && aux > this.positions2.length){
+            if((collider == 2 && aux > this.positions2.length) || (collider == 1 && aux > this.positions2.length)){
                 break
             }
             this.positions2[this.positions2.length - aux].forEach((item, index) => {
@@ -256,7 +249,7 @@ class Board{
         let rows = []
         let repeat = 0;
         while (collider < this.positions2.length) {
-            if (collider == 2 && aux > this.positions2.length) {
+            if ((collider == 2 && aux > this.positions2.length) || (collider == 1 && aux > this.positions2.length)) {
                 break
             }
             this.positions2[this.positions2.length - aux].forEach((item, index) => {
@@ -300,7 +293,7 @@ class Board{
         let rows = []
         let repeat = 0;
         while (collider < this.positions2.length) {
-            if (collider == 2 && aux > this.positions2.length) {
+            if ((collider == 2 && aux > this.positions2.length) || (collider == 1 && aux > this.positions2.length)) {
                 break
             }
             this.positions2[this.positions2.length - aux].slice().reverse().forEach((item, index) => {
@@ -377,22 +370,14 @@ class Board{
 
     deleteFullRows(){
         let tablero = this.grid;
-        console.log (tablero)
         for (let row in tablero){
-            console.log("row N° "+ row + " " + tablero[row])
-            let arrayRow = []
-            //console.log("array"+arrayRow)
             let counter = 0;
             for (let col in tablero[row]){
-                console.log(tablero[row][col])
                 if(tablero[row][col] == 1){
                     counter = counter + 1
-                    console.log("cont " + counter)
                     if(counter == this.cols){
-                        //console.log("Fullrow")
                         tablero.splice(row, 1)
-                        console.log(tablero)
-                        tablero.unshift(arrayRow(this.cols).fill(0))
+                        tablero.unshift(Array(this.cols).fill(0))
                     }
                 }
             }
