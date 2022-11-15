@@ -277,10 +277,10 @@ class Board{
             aux++
         }
 
-        if (this.grid?.[this.colls[0][0]] === undefined) {
+        /* if (this.grid?.[this.colls[0][0]] === undefined) {
             this.colls = []
             return true
-        }
+        } */
         this.colls.forEach((item, index) => {
             if (this.grid[item[0]][item[1]] != 0) {
                 collision = true
@@ -321,10 +321,10 @@ class Board{
             aux++
         }
    
-        if (this.grid?.[this.colls[0][0]] === undefined) {
+        /* if (this.grid?.[this.colls[0][0]] === undefined) {
             this.colls = []
             return true
-        }
+        } */
         this.colls.forEach((item, index) => {
             if (this.grid[item[0]][item[1]] != 0) {
                 collision = true
