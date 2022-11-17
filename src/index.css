@@ -7,6 +7,7 @@
     --tetris: 'Press Start 2P', cursive;
     /* --btn-m: grid; */
     --btn-m: none;
+    --btn-p: flex;
 }
 body{
     display: flex;
@@ -54,7 +55,7 @@ body{
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     place-items: stretch;
-    padding: 40px 30px 0;
+    padding: 10px 30px 0;
 }
 .btn-mobile a, .play{
     background: green;
@@ -75,8 +76,42 @@ canvas{
     margin-top: 10px;
     background: green;
     max-width: none;
-    display: flex;
+    display: var(--btn-p);
     justify-content: center;
     align-items: center;
     gap: 15px;
+}
+.disable{
+    background: gray;
+    pointer-events: none;
+}
+/*Mediasquery*/
+@media (max-width: 480px) {
+    body{
+        justify-content: center;
+    }
+    .score{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 30px;
+    }
+    .score h1{
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+    }
+    #d-proxima{
+        margin: 20px 0;
+    }
+    .score p:not(:first-of-type){
+        margin-bottom: 5px;
+    }
+    .score::before{
+        height: 20px;
+        inset: 0;
+        margin-left: 0;
+        margin-bottom: -10px;
+        font-size: .6rem;
+    }
 }

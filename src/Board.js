@@ -8,27 +8,51 @@ class Board{
         this.rows = rsize
         this.width = csize * this.cellSize
         this.height = rsize * this.cellSize
-        while(true){
-            if(window.innerHeight < this.height + 140){
-                this.cellSize -= contador
-                this.width = csize * this.cellSize
-                this.height = rsize * this.cellSize
-                contador++
-            }else{
-                board.width = this.width
-                board.height = this.height
-                break
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+            while(true){
+                if(window.innerWidth< this.width + 60){
+                    this.cellSize -= contador
+                    this.width = csize * this.cellSize
+                    this.height = rsize * this.cellSize
+                    contador++
+                }else{
+                    board.width = this.width
+                    board.height = this.height
+                    break
+                }
+            }
+        }else{
+            while(true){
+                if(window.innerHeight < this.height + 140){
+                    this.cellSize -= contador
+                    this.width = csize * this.cellSize
+                    this.height = rsize * this.cellSize
+                    contador++
+                }else{
+                    board.width = this.width
+                    board.height = this.height
+                    break
+                }
             }
         }
+        
         this.grid = Array.from(Array(this.rows), () => Array(this.cols).fill(0))
         this.positions = []
         this.positions2 = []
         this.colls = []
         this.actualF = []
+        this.nextF = []
         this.numR = 0;
         this.r = 0;
         this.canMove = true
         this.endGame = false
+        this.score = document.getElementById("score")
+        this.levelTxt = document.getElementById("level")
+        this.scoreTotal = 0
+        this.scoreLevel = 0
+        this.level = 1
+        this.score.textContent = 0
+        this.levelTxt.textContent = 1
     }
     
     drawBackground(){
@@ -48,21 +72,6 @@ class Board{
         }
     }
     refresh(figure){
-        let t = [
-            [0,0,0],
-            [0,1,0],
-            [1,1,1]
-        ]
-        let t3 = [
-            [0,1,0,0],
-            [0,1,0,0],
-            [0,1,0,0],
-            [0,1,0,0]
-        ]
-        let t2 = [
-            [1,1],
-            [1,1]
-        ]
         this.canMove = true
         let midX = Math.round(this.cols / 2)
         //let fRow = false
@@ -77,7 +86,9 @@ class Board{
                     this.positions2[indexM].push([indexM, col, sItem])
             })
         })
+        this.nextF = new Figuras().tetrominoRandom();
         //console.table(this.positions2)
+        //console.log(this.nextF)
         this.drawMatriz()
     }
     rotate(){
@@ -155,23 +166,28 @@ class Board{
                 }
             })
             this.drawMatriz()
+            this.scoreTotal += 2
+            this.scoreLevel += 2
         }else{
             this.deleteFullRows()
-            let figure = new Figuras().tetrominoRandom();
-            if(!this.gameOver(figure)){
+       /*      let figure = new Figuras().tetrominoRandom(); */
+            /* this.nextF = figure */
+            if(!this.gameOver(this.nextF)){
                 this.positions2 = []
                 this.actualF = []
                 this.numR = 0;
                 this.r = 0;
                 //this.gameOver(figure)
-                this.refresh(figure)
+                this.refresh(this.nextF)
                 this.drawMatriz()
+                this.scoreTotal += 10
+                this.scoreLevel += 10
             }else{
                 console.log("Perdiste")
             }
             
         }
-
+        this.score.textContent = this.scoreTotal
     }
     clean(){
         this.positions2.forEach((itemM,indexM) =>{
@@ -181,6 +197,7 @@ class Board{
                 }
             }
         })
+        
     }
     
     drawMatriz(){
@@ -201,49 +218,49 @@ class Board{
                     case 0:
                         this.ctx.strokeStyle = "#423956"
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                    break
+                        break
                     case 1:
                         this.ctx.strokeStyle = "#423956"
                         this.ctx.fillStyle = "blue"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                    break
+                        break
                     case 2:
                         this.ctx.strokeStyle = "#423956"
                         this.ctx.fillStyle = "green"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                    break
+                        break
                     case 3:
                         this.ctx.strokeStyle = "#423956"
                         this.ctx.fillStyle = "pink"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                    break
+                        break
                     case 4:
                         this.ctx.strokeStyle = "#423956"
                         this.ctx.fillStyle = "violet"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                    break
+                        break
                     case 5:
                         this.ctx.strokeStyle = "#423956"
-                        this.ctx.fillStyle = "cian"
+                        this.ctx.fillStyle = "cyan"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                    break
+                        break
                     case 6:
                         this.ctx.strokeStyle = "#423956"
                         this.ctx.fillStyle = "orange"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                    break
+                        break
                     case 7:
                         this.ctx.strokeStyle = "#423956"
                         this.ctx.fillStyle = "red"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                    break
+                        break
                 }
             })
         })
@@ -426,43 +443,40 @@ class Board{
     } */
 
     deleteFullRows(){
-        let tablero = this.grid;
+        let tablero = this.grid
+        let lines = 0
         for (let row in tablero){
             let counter = 0;
-            let lines=0
             for (let col in tablero[row]){
                 if(tablero[row][col] >= 1){
                     counter = counter + 1
                     if(counter == this.cols){
                         tablero.splice(row, 1)
                         tablero.unshift(Array(this.cols).fill(0))
-                        lines = counter/this.cols
+                        lines++
                         //console.log("lines" + lines)
-                        this.scoreRow(lines)
                     }
                 }
             }
         }
+        this.scoreRow(lines)
     }
 
     scoreRow(row){
-        const score = document.getElementById("score")
-        let singleRow = 100;
-        //let dobleRow = 250;
-        //let tipleRow = 500;
-        console.log(row)
-        if (row == 1){
-            console.log(row)
-            let scoreTotal = score.textContent
-            scoreTotal = parseInt(scoreTotal) + singleRow;
-            score.textContent = scoreTotal
-            console.log(scoreTotal)
+        let singleRow = 100
+        let dobleRow = 250
+        let tripleRow = 500
+        if (row == 1){    
+            this.scoreTotal += singleRow
+            this.scoreLevel += singleRow
+        }else if (row == 2){
+            this.scoreTotal += dobleRow
+            this.scoreLevel += dobleRow
+        }else if(row >= 3){
+            this.scoreTotal += tripleRow
+            this.scoreLevel += tripleRow
         }
-        /*else if (row == 2){
-            console.log(row)
-            score.textContent = dobleRow;
-            console.log(dobleRow)
-        }*/
+        this.score.textContent = this.scoreTotal
     }
 
     gameOver(tetro){
@@ -473,13 +487,18 @@ class Board{
                     this.endGame = end
                 }
             })
+            
             if(end){
+                document.documentElement.style.setProperty("--btn-p","flex")
                 return true
             }else{
                 return false
             }
-        }
-    
+    }
+    clearBoard(){
+        this.grid = Array.from(Array(this.rows), () => Array(this.cols).fill(0))
+    }
+
     /*gameOver(tetro){
         let end = true;
         if(tetro.length == 2){
