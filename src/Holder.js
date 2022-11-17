@@ -2,31 +2,34 @@ const ROWS = 20
 const COLS = 13
 const CELL_EDGE = 30
 const CANVAS = document.getElementById("display")
+const C_NEXT = document.getElementById("d-proxima")
 var lastDelta = 1000
 var deltaTime = 700
 var playing = true
 
 let board = new Board(CANVAS,ROWS, COLS, CELL_EDGE)
+let netxF = new Board(C_NEXT,4,4,30)
 //board.printc();
 board.drawMatriz()
+netxF.drawMatriz()
 //board.drawForm()
 let figureM = new Figuras().tetrominoRandom();
 
 board.refresh(figureM)
 //board.moveDown()
-function m(){
+function moveD(){
     board.moveDown()
     //board.drawMatriz()
 }
-function r(){
+function rotateF(){
     board.rotate()
     //board.drawMatriz()
 }
-function ri(){
+function moveRi(){
     board.moveRight()
     //board.drawMatriz()
 }
-function le(){
+function moveLe(){
     board.moveLeft()
     //board.drawMatriz()
 }
@@ -34,16 +37,16 @@ document.addEventListener("keydown", e =>{
     //console.log(e.key)
     switch(e.key){
         case "ArrowDown":
-            m()
+            moveD()
             break
         case "ArrowRight":
-            ri()
+            moveRi()
             break
         case "ArrowLeft":
-            le()
+            moveLe()
             break
         case "ArrowUp":
-            r()
+            rotateF()
             break
         case "q":
             stop()
