@@ -17,7 +17,9 @@ class Board{
         this.numR = 0;
         this.r = 0;
         this.canMove = true
+        this.endGame = false
     }
+    
     drawBackground(){
         this.ctx.strokeStyle = "#000000"
         let posC = 0;
@@ -143,23 +145,22 @@ class Board{
             })
             this.drawMatriz()
         }else{
-            this.positions2 = []
+            this.deleteFullRows()
+            let figure = new Figuras().tetrominoRandom();
+            if(!this.gameOver(figure)){
+                this.positions2 = []
                 this.actualF = []
                 this.numR = 0;
                 this.r = 0;
-                let t = [
-                    [0,0,0],
-                    [0,1,1],
-                    [1,1,0]
-                ]
-                let t2 = [
-                    [2,2],
-                    [2,2]
-                ]
-                this.refresh(t2)
+                //this.gameOver(figure)
+                this.refresh(figure)
                 this.drawMatriz()
+            }else{
+                console.log("Perdiste")
+            }
+            
         }
-       
+
     }
     clean(){
         this.positions2.forEach((itemM,indexM) =>{
@@ -170,29 +171,68 @@ class Board{
             }
         })
     }
+    
     drawMatriz(){
-        let row = 0;
         this.ctx.clearRect(0, 0, this.width, this.height)
-       
         this.grid.forEach((item,index) => {
-            item.forEach((item2,index2) => {
+            item.forEach((item2,index2) => {   
+                /*let color = new Figuras().colors(item2);       
+                if(item2==0){
+                    this.ctx.strokeStyle = "#000000"
+                    this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                }else{
+                    this.ctx.strokeStyle = "#000000"
+                    this.ctx.fillStyle = color
+                    this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                    this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                }*/
                 switch(item2){
                     case 0:
-                        this.ctx.strokeStyle = "#000000"
+                        this.ctx.strokeStyle = "#423956"
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                        break
+                    break
                     case 1:
-                        this.ctx.strokeStyle = "#000000"
-                        this.ctx.fillStyle = "#00ff00"
+                        this.ctx.strokeStyle = "#423956"
+                        this.ctx.fillStyle = "blue"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                        break
+                    break
                     case 2:
-                        this.ctx.strokeStyle = "#000000"
-                        this.ctx.fillStyle = "cyan"
+                        this.ctx.strokeStyle = "#423956"
+                        this.ctx.fillStyle = "green"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                        break
+                    break
+                    case 3:
+                        this.ctx.strokeStyle = "#423956"
+                        this.ctx.fillStyle = "pink"
+                        this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                        this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                    break
+                    case 4:
+                        this.ctx.strokeStyle = "#423956"
+                        this.ctx.fillStyle = "violet"
+                        this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                        this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                    break
+                    case 5:
+                        this.ctx.strokeStyle = "#423956"
+                        this.ctx.fillStyle = "cian"
+                        this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                        this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                    break
+                    case 6:
+                        this.ctx.strokeStyle = "#423956"
+                        this.ctx.fillStyle = "orange"
+                        this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                        this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                    break
+                    case 7:
+                        this.ctx.strokeStyle = "#423956"
+                        this.ctx.fillStyle = "red"
+                        this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                        this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
+                    break
                 }
             })
         })
@@ -206,7 +246,7 @@ class Board{
         let repeat = 0;
         //console.log(this.positions2.length)
         while (collider < this.positions2.length) {
-            if(collider == 2 && aux > this.positions2.length){
+            if((collider == 2 && aux > this.positions2.length) || (collider == 1 && aux > this.positions2.length)){
                 break
             }
             this.positions2[this.positions2.length - aux].forEach((item, index) => {
@@ -256,7 +296,7 @@ class Board{
         let rows = []
         let repeat = 0;
         while (collider < this.positions2.length) {
-            if (collider == 2 && aux > this.positions2.length) {
+            if ((collider == 2 && aux > this.positions2.length) || (collider == 1 && aux > this.positions2.length)) {
                 break
             }
             this.positions2[this.positions2.length - aux].forEach((item, index) => {
@@ -277,10 +317,10 @@ class Board{
             aux++
         }
 
-        if (this.grid?.[this.colls[0][0]] === undefined) {
+        /* if (this.grid?.[this.colls[0][0]] === undefined) {
             this.colls = []
             return true
-        }
+        } */
         this.colls.forEach((item, index) => {
             if (this.grid[item[0]][item[1]] != 0) {
                 collision = true
@@ -300,7 +340,7 @@ class Board{
         let rows = []
         let repeat = 0;
         while (collider < this.positions2.length) {
-            if (collider == 2 && aux > this.positions2.length) {
+            if ((collider == 2 && aux > this.positions2.length) || (collider == 1 && aux > this.positions2.length)) {
                 break
             }
             this.positions2[this.positions2.length - aux].slice().reverse().forEach((item, index) => {
@@ -320,11 +360,11 @@ class Board{
             })
             aux++
         }
-   
-        if (this.grid?.[this.colls[0][0]] === undefined) {
+
+        /* if (this.grid?.[this.colls[0][0]] === undefined) {
             this.colls = []
             return true
-        }
+        } */
         this.colls.forEach((item, index) => {
             if (this.grid[item[0]][item[1]] != 0) {
                 collision = true
@@ -377,25 +417,104 @@ class Board{
 
     deleteFullRows(){
         let tablero = this.grid;
-        console.log (tablero)
         for (let row in tablero){
-            console.log("row N° "+ row + " " + tablero[row])
-            let arrayRow = []
-            //console.log("array"+arrayRow)
             let counter = 0;
+            let lines=0
             for (let col in tablero[row]){
-                console.log(tablero[row][col])
-                if(tablero[row][col] == 1){
+                if(tablero[row][col] >= 1){
                     counter = counter + 1
-                    console.log("cont " + counter)
                     if(counter == this.cols){
-                        //console.log("Fullrow")
                         tablero.splice(row, 1)
-                        console.log(tablero)
-                        tablero.unshift(arrayRow(this.cols).fill(0))
+                        tablero.unshift(Array(this.cols).fill(0))
+                        lines = counter/this.cols
+                        //console.log("lines" + lines)
+                        this.scoreRow(lines)
                     }
                 }
             }
         }
     }
+
+    scoreRow(row){
+        const score = document.getElementById("score")
+        let singleRow = 100;
+        //let dobleRow = 250;
+        //let tipleRow = 500;
+        console.log(row)
+        if (row == 1){
+            console.log(row)
+            let scoreTotal = score.textContent
+            scoreTotal = parseInt(scoreTotal) + singleRow;
+            score.textContent = scoreTotal
+            console.log(scoreTotal)
+        }
+        /*else if (row == 2){
+            console.log(row)
+            score.textContent = dobleRow;
+            console.log(dobleRow)
+        }*/
+    }
+
+    gameOver(tetro){
+        let end = false
+            this.grid[tetro.length - 1].forEach((item, index)=>{
+                if(item != 0){
+                    end = true
+                    this.endGame = end
+                }
+            })
+            if(end){
+                return true
+            }else{
+                return false
+            }
+        }
+    
+    /*gameOver(tetro){
+        let end = true;
+        if(tetro.length == 2){
+            for(let i in this.grid[2]){
+                if (i >= 4 && i <= 6){
+                    if(this.grid[2][i] != 0){
+                        console.log("No más")
+                        return
+                    }
+                    else{
+                        this.refresh(tetro)
+                        this.drawMatriz()
+                    }
+                }
+            }
+        }
+        else if(tetro.length == 3){
+            for(let i in this.grid[3]){
+                if (i >= 4 && i <= 8){
+                    if(this.grid[3][i] != 0){
+                        console.log("No más")
+                        
+                        return
+                    }
+                    else{
+                        this.refresh(tetro)
+                        this.drawMatriz()
+                    }
+                }
+            }
+        }
+        else if(tetro.length == 4){
+            for(let i in this.grid[4]){
+                if (i >= 6 && i <= 7){
+                    if(this.grid[3][i] != 0){
+                        console.log("No más")
+                        return
+                    }
+                    else{
+                        this.refresh(tetro)
+                        this.drawMatriz()
+                    }
+                }
+            }
+        }
+        
+    }*/
 }
