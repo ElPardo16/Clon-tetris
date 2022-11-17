@@ -13,6 +13,8 @@ board.drawMatriz()
 let figureM = new Figuras().tetrominoRandom();
 
 board.refresh(figureM)
+
+
 //board.moveDown()
 function m(){
     board.moveDown()
@@ -56,7 +58,11 @@ document.addEventListener("keydown", e =>{
 
 
     var gameloop = setInterval(() => {
-        board.moveDown()
+        if(!board.endGame){
+            board.moveDown()
+        }else{
+            stop()
+        }
     },deltaTime)
 
 
@@ -74,6 +80,9 @@ function pause(){
 function stop(){
     clearInterval(gameloop)
 }
+
+//console.log(Board.endGame)
+
 /* setInterval(() => {board.moveDown()
 board.drawMatriz()}, 200) */
 //board.rotate()
