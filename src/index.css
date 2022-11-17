@@ -1,7 +1,82 @@
 *{
     margin: 0;
     box-sizing: border-box;
+    font-family: var(--tetris);
 }
+:root{
+    --tetris: 'Press Start 2P', cursive;
+    /* --btn-m: grid; */
+    --btn-m: none;
+}
+body{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+    min-height: 100vh;
+}
+.score{
+    position: relative;
+    padding: 80px 30px;
+}
+.score::before{
+    position: absolute;
+    content: "Dev @ElPardo16 & @AngelaDiaz20";
+    width: 100%;
+    height: 40px;
+    inset: 0;
+    margin: auto;
+    margin-bottom: 0;
+    color: green;
+    margin-left: 30px;
+    font-size: .8rem;
+}
+.score h1{
+    color: green;
+    margin-bottom: 50px;
+}
+#d-proxima{
+    margin: 40px 0;
+}
+.score p:not(:first-of-type){
+    margin-bottom: 20px;
+}
+.score p > span{
+    color: green;
+}
+.screen{
+    display: grid;
+    grid: 1fr min-content min-content / max-content;
+    padding: 30px;
+}
+.btn-mobile{
+    display: var(--btn-m);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    place-items: stretch;
+    padding: 40px 30px 0;
+}
+.btn-mobile a, .play{
+    background: green;
+    color : white;
+    text-align: center;
+    text-decoration: none;
+    height: 60px;
+    max-width: 60px;
+}
+.btn-mobile span{
+    line-height: 60px;
+}
+
 canvas{
     border: black 2px solid;
+}
+.play{
+    margin-top: 10px;
+    background: green;
+    max-width: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
 }

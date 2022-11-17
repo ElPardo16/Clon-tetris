@@ -1,5 +1,6 @@
 class Board{
     constructor(board, rsize, csize, edge){
+        let contador = .2;
         this.board = board
         this.ctx = board.getContext("2d")
         this.cellSize = edge
@@ -7,9 +8,19 @@ class Board{
         this.rows = rsize
         this.width = csize * this.cellSize
         this.height = rsize * this.cellSize
-        board.width = this.width
-        board.height = this.height
-        this.grid = Array.from(Array(this.rows), () => Array(this.cols).fill(0));
+        while(true){
+            if(window.innerHeight < this.height + 140){
+                this.cellSize -= contador
+                this.width = csize * this.cellSize
+                this.height = rsize * this.cellSize
+                contador++
+            }else{
+                board.width = this.width
+                board.height = this.height
+                break
+            }
+        }
+        this.grid = Array.from(Array(this.rows), () => Array(this.cols).fill(0))
         this.positions = []
         this.positions2 = []
         this.colls = []
