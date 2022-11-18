@@ -13,6 +13,7 @@
 </head>
 <body>
     <div class="screen">
+        <div class="hide" id="lose">GAME OVER</div>
         <canvas id="display"></canvas>
         <a href="javascript:void(0)" onclick="playGame()" id="play" class="play"><span class="material-symbols-outlined">play_arrow</span> Jugar</a>
         <div class="btn-mobile">
@@ -33,9 +34,11 @@
             <span id="level">0</span>
         </p>
     </div>
+    <div id="sonido"></div>
     
     <script src="./src/Figuras.js"></script>
     <script src="./src/Board.js"></script>
     <script src="./src/Holder.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

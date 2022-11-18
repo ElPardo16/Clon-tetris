@@ -53,6 +53,7 @@ class Board{
         this.level = 1
         this.score.textContent = 0
         this.levelTxt.textContent = 1
+        this.sound = document.getElementById("sonido")
     }
     
     drawBackground(){
@@ -204,60 +205,50 @@ class Board{
         this.ctx.clearRect(0, 0, this.width, this.height)
         this.grid.forEach((item,index) => {
             item.forEach((item2,index2) => {   
-                /*let color = new Figuras().colors(item2);       
-                if(item2==0){
-                    this.ctx.strokeStyle = "#000000"
-                    this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                }else{
-                    this.ctx.strokeStyle = "#000000"
-                    this.ctx.fillStyle = color
-                    this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                    this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
-                }*/
                 switch(item2){
                     case 0:
-                        this.ctx.strokeStyle = "#423956"
+                        this.ctx.strokeStyle = "#C0BFC0"
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         break
                     case 1:
-                        this.ctx.strokeStyle = "#423956"
-                        this.ctx.fillStyle = "blue"
+                        this.ctx.strokeStyle = "#BD3A97"
+                        this.ctx.fillStyle = "#EB8FD0"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         break
                     case 2:
-                        this.ctx.strokeStyle = "#423956"
-                        this.ctx.fillStyle = "green"
+                        this.ctx.strokeStyle = "#CE5711"
+                        this.ctx.fillStyle = "#FF904E" 
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         break
                     case 3:
-                        this.ctx.strokeStyle = "#423956"
-                        this.ctx.fillStyle = "pink"
+                        this.ctx.strokeStyle = "#4DAA26"
+                        this.ctx.fillStyle = "#7ED958"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         break
                     case 4:
-                        this.ctx.strokeStyle = "#423956"
-                        this.ctx.fillStyle = "violet"
+                        this.ctx.strokeStyle = "#C0890A"
+                        this.ctx.fillStyle = "#FED16A"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         break
                     case 5:
-                        this.ctx.strokeStyle = "#423956"
-                        this.ctx.fillStyle = "cyan"
+                        this.ctx.strokeStyle = "#B50746"
+                        this.ctx.fillStyle = "#DC0C57"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         break
                     case 6:
-                        this.ctx.strokeStyle = "#423956"
-                        this.ctx.fillStyle = "orange"
+                        this.ctx.strokeStyle = "#0083D0"
+                        this.ctx.fillStyle = "#37B5FF"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         break
                     case 7:
-                        this.ctx.strokeStyle = "#423956"
-                        this.ctx.fillStyle = "red"
+                        this.ctx.strokeStyle = "#5428AE"
+                        this.ctx.fillStyle = "#8B53FF"
                         this.ctx.fillRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         this.ctx.strokeRect(index2 * this.cellSize, index * this.cellSize, this.cellSize, this.cellSize)
                         break
@@ -451,10 +442,10 @@ class Board{
                 if(tablero[row][col] >= 1){
                     counter = counter + 1
                     if(counter == this.cols){
+                        this.sound.innerHTML = `<audio src="/src/sounds/drop.wav" autoplay></audio>`
                         tablero.splice(row, 1)
                         tablero.unshift(Array(this.cols).fill(0))
                         lines++
-                        //console.log("lines" + lines)
                     }
                 }
             }
@@ -485,6 +476,24 @@ class Board{
                 if(item != 0){
                     end = true
                     this.endGame = end
+                    this.sound.innerHTML = `<audio src="/src/sounds/soundGameOver.mp3" autoplay></audio>`
+                    let lose = document.getElementById ("lose")
+                    lose.classList.replace("hide", "lose")
+                    
+                    setTimeout(()=>{
+                        Swal.fire({
+                        title: '',
+                        imageUrl: 'https://i.postimg.cc/c4kW8q66/gameOver.png',
+                        imageWidth: 200,
+                        imageHeight: 150,
+                        text: "Presiona el botón 'Jugar' para reiniciar la partida",
+                        confirmButtonColor:"green",
+                        confirmButtonText:'Ok :(',
+                        showConfirmButton: true,
+                        timer: 8000,
+                        timerProgressBar: true
+                    })},2500)
+
                 }
             })
             

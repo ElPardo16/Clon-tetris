@@ -9,7 +9,11 @@ var playing = true
 var levelScore = 0
 
 let board = new Board(CANVAS,ROWS, COLS, CELL_EDGE)
-let nextF = new Board(C_NEXT,4,4,CELL_EDGE / 2)
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+    nextF = new Board(C_NEXT,4,4,CELL_EDGE / 2)
+}else{
+    nextF = new Board(C_NEXT,4,4,CELL_EDGE)
+}
 //board.printc();
 board.drawMatriz()
 nextF.drawMatriz()
@@ -104,6 +108,7 @@ function moreLevel(){
                 nextF.refresh(board.nextF)
                 moreLevel()
             }else{
+
                 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
                     document.documentElement.style.setProperty("--btn-p","flex")
                     document.documentElement.style.setProperty("--btn-m","none")
@@ -116,15 +121,20 @@ function moreLevel(){
     }
 }
 function playGame(){
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        nextF = new Board(C_NEXT,4,5,CELL_EDGE / 2)
+    }else{
+        nextF = new Board(C_NEXT,4,5,CELL_EDGE)
+    }
     board = new Board(CANVAS,ROWS, COLS, CELL_EDGE)
-    nextF = new Board(C_NEXT,4,4,CELL_EDGE / 2)
     board.levelTxt.textContent = board.level
     board.drawMatriz()
     nextF.drawMatriz()
-    //board.drawForm()
     let figureM = new Figuras().tetrominoRandom();
     board.nextF = figureM
     if(playing){
+        let lose = document.getElementById ("lose")
+        lose.classList.replace("lose", "hide")
         board.refresh(figureM)
         nextF.refresh(board.nextF)
         gameloop = setInterval(() => {
@@ -153,7 +163,6 @@ function playGame(){
     }
 }
 
-//console.log(Board.endGame)
 
 /* setInterval(() => {board.moveDown()
 board.drawMatriz()}, 200) */
