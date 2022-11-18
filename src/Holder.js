@@ -10,9 +10,9 @@ var levelScore = 0
 
 let board = new Board(CANVAS,ROWS, COLS, CELL_EDGE)
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-    nextF = new Board(C_NEXT,4,4,CELL_EDGE / 2)
+    nextF = new Board(C_NEXT,4,5,CELL_EDGE / 2)
 }else{
-    nextF = new Board(C_NEXT,4,4,CELL_EDGE)
+    nextF = new Board(C_NEXT,4,5,CELL_EDGE)
 }
 //board.printc();
 board.drawMatriz()
