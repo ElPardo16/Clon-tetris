@@ -13,6 +13,8 @@ Los arreglos y tipos de objetos de datos complejos que almacenan mucha informaci
 <br>
 Usar metodos como map, reduce, filter, foreach para modificar arreglos o recorrerlos, era mi terror, pero lo he enfrentado y he aprendido a usarlos, y entender como funcionan, sus pros y sus contras.
 
+<br>
+
 
         this.r = this.actualF[0].map((val, index) => this.actualF.map(row => row[index]).reverse())
 
@@ -30,6 +32,16 @@ Nunca habia usado canvas en mis programas, asi que era terreno inexplorado, pero
 ## Usar POO en javascript
 <br>
 Manejo POO en otros lenguajes como c# o java, pero en javascript no la tengo tan clara, pero al hacer este juego me lo propuse y lo aplique en este lenguaje, pero tambien me di cuenta que a pesar de proclamarce como un lenguaje orientado a objetos, tiene muchas falencias en este paradigma, por eso se usa typeScript para proyectos mas robustos, ya que javascript parace mas un lenguaje funcional que POO
+<br>
+
+## Proceso de investigacion
+<br>
+Trataba de buscar cosas que no conocia, como canvas, en su documentacion y ver como se usaba y que metodos y propiedades tenia.
+
+Otras como las rotaciones tuve que plantear como podia realizarlo, y buscar posibles soluciones, y ver cual se acoplaba a lo que nececitaba, ademas de entenderla
+
+En general todas mis respuestas las encontre en la documentacion del lenguaje, y en la prueba y error, para comprender que hacia y como funcionaba
+
 <br>
 
 ## Retos
