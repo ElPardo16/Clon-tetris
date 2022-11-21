@@ -101,19 +101,25 @@ class Board{
     //Método de rotación de figuras
     rotate(){
         this.clean()//Se llama método para limpiar el arreglo de la figura para después dibujarla nuevamente
+        // Si el nimero de rotaciones es diferente de 0
         if(this.numR == 0){
+            //Si 0 se rota con respecto a la figura original
             this.r = this.actualF[0].map((val, index) => this.actualF.map(row => row[index]).reverse())
+            //Con map generamos un nuevo arreglo rotado
         }else{
+            //Se rota con respecto a la rotacion anterior
             this.r = this.r[0].map((val, index) => this.r.map(row => row[index]).reverse())
         }
         this.numR++
         let row = 0;
         let c = 0;
+        // Dibujamos la figura nuevamente en su nueva posicion
         this.positions2.forEach((itemM,indexM) => {
             itemM.forEach((item, index) => {
                 this.grid[item[0]][item[1]] = this.r[row][c]
                 this.positions2[indexM][index] = [item[0] , item[1] , this.r[row][c]]
                 c++
+                // Aumentamos la fila para que pase a la siguiente, cuando la columna llega a su valor maximo
                 if(c >= this.r.length){
                     c = 0
                     row++
@@ -121,6 +127,7 @@ class Board{
             })
         })
         //console.table(this.positions2)
+        //Redibujamos el canvas
         this.drawMatriz()
     }
     //Método para desplazar figura hacía la derecha
@@ -304,18 +311,25 @@ class Board{
             if((collider == 2 && aux > this.positions2.length) || (collider == 1 && aux > this.positions2.length)){
                 break
             }
+            //Recorremos la ultima fila del arreglo, si no se encuentra collider entoces pasamos a la siguiente
             this.positions2[this.positions2.length - aux].forEach((item, index) => {
-                
+                //Obtenemos el valor de la posicion y si es diferente de 0
+                //podria ser un collider
                 if (item[item.length - 1] != 0 && collider < this.positions2.length) {
+                        //Recorremos la lista de colliders para verificar que no se encuentren
+                        //en la misma fila o columna
                         cols.forEach((item2, index2) => {
                             if(item2 == item[1]){
+                                //Si lo estan, entoces aumentamos el valor de repeat
                                 repeat++
                             }
                         })
                         //console.log(repeat)
+                        //si ningun collider se repite, entonces lo agregamos
                         if(repeat == 0){
                             this.colls[collider] = [item[0] + 1, item[1]]
                             cols.push(item[1])
+                            // sumamos 1 al numero de collider
                             collider++
                         }
                         repeat = 0
