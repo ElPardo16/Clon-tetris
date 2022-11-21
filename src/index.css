@@ -82,6 +82,10 @@ canvas{
     align-items: center;
     gap: 15px;
 }
+.play:hover{
+    background: rgb(1, 92, 1);
+    transition: ease 200ms;
+}
 .disable{
     background: gray;
     pointer-events: none;
